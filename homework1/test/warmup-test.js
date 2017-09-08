@@ -39,3 +39,17 @@ describe('change', () => {
     (() => change(-50)).should.throw(RangeError);
   });
 });
+
+describe('stripQuotes', () => {
+  it('works on the empty string', () => {
+    stripQuotes('').should.eql('');
+  });
+
+  it('strips quotes properly for non-empty strings', () => {
+    stripQuotes('Hello, world').should.eql('Hello, world');
+    stripQuotes('"\'').should.eql('');
+    stripQuotes('a"""\'\'"z').should.eql('az');
+  });
+});
+
+

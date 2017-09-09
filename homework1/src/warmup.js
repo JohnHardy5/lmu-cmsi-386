@@ -4,16 +4,33 @@ function change(amount) {
   if (amount < 0) {
     throw new RangeError('amount cannot be negative');
   }
-  let amountRemaining = amount;
-  const coins = [25, 10, 5, 1];
-  const result = [0, 0, 0, 0];
-  for (let i = 0; i < coins.length; i += 1) {
-    result[i] = Math.floor(amountRemaining / coins[i]);
-    amountRemaining %= coins[i];
-  }
+  const result = [];
+  let remaining = amount;
+  [25, 10, 5, 1].forEach((coin) => {
+    result.push(Math.floor(remaining / coin));
+    remaining %= coin;
+  });
   return result;
+}
+
+function stripQuotes(arg) {
+  const badchars = ['`', '"', '\''];
+  let newstring = '';
+  for (let i = 0; i < arg.length; i += 1) {
+    if (!badchars.includes(arg.charAt(i))) {
+      newstring += arg.charAt(i);
+    }
+  }
+  return newstring;
+}
+
+function scramble(stringarg) {
+  const stringarray = [...stringarg];
+  return stringarray.charAt(Math.random(0, stringarray.length)) + scramble(stringarray.substring(0, stringarray.length - 1));
 }
 
 module.exports = {
   change,
+  stripQuotes,
+  scramble,
 };

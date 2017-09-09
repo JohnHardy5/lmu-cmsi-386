@@ -22,7 +22,13 @@ function stripQuotes(arg){
 	return newstring
 }
 
+function scramble(stringarg){
+	var stringarray = [...stringarg];
+	return stringarg.charAt(Math.random(0, stringarg.length)) + scramble(stringarg.substring(0, stringarg.length - 1));
+}
+
 	module.exports = {
 	change,
 	stripQuotes,
+	scramble,
 	}

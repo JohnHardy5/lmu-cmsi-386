@@ -24,9 +24,14 @@ function stripQuotes(arg) {
   return newstring;
 }
 
-function scramble(stringarg) {
-  const stringarray = [...stringarg];
-  return stringarray.charAt(Math.random(0, stringarray.length)) + scramble(stringarray.substring(0, stringarray.length - 1));
+function scramble(arg) {
+  if (arg === '') {
+    return '';
+  }
+  const randomElement = Math.floor(Math.random() * (0, arg.length));
+  let string = arg.slice(0, randomElement) + arg.slice(randomElement + 1, arg.length);
+  string = arg.charAt(randomElement) + scramble(string);
+  return string;
 }
 
 module.exports = {

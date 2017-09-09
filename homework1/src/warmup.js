@@ -34,8 +34,24 @@ function scramble(arg) {
   return string;
 }
 
+function powers(base, limit, callback) {
+  const arr = [];
+  let value = 0;
+  let exp = 0;
+  let nextvalue = 0;
+  while (value < limit && nextvalue <= limit) {
+    value = Math.pow(base, exp);
+    arr.push(value);
+    callback(value);
+    nextvalue = Math.pow(base, exp + 1);
+    exp += 1;
+  }
+  return powers;
+}
+
 module.exports = {
   change,
   stripQuotes,
   scramble,
+  powers,
 };

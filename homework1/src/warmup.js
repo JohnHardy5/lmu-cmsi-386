@@ -14,14 +14,11 @@ function change(amount) {
 }
 
 function stripQuotes(arg) {
-  const badchars = ['`', '"', '\''];
-  let newstring = '';
-  for (let i = 0; i < arg.length; i += 1) {
-    if (!badchars.includes(arg.charAt(i))) {
-      newstring += arg.charAt(i);
-    }
-  }
-  return newstring;
+  let newString = arg;
+  newString = newString.replace(/"/g, '');
+  newString = newString.replace(/\\/g, '');
+  newString = newString.replace(/'/g, '');
+  return newString;
 }
 
 function scramble(arg) {
@@ -34,8 +31,13 @@ function scramble(arg) {
   return string;
 }
 
+function powers(base, limit, callBack) {
+  return 0;
+}
+
 module.exports = {
   change,
   stripQuotes,
   scramble,
+  powers,
 };

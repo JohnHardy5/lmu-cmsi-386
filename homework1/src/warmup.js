@@ -25,14 +25,42 @@ function scramble(arg) {
   if (arg === '') {
     return '';
   }
-  const randomElement = Math.floor(Math.random() * (0, arg.length));
+  const randomElement = Math.floor(Math.random() * arg.length);
   let string = arg.slice(0, randomElement) + arg.slice(randomElement + 1, arg.length);
   string = arg.charAt(randomElement) + scramble(string);
   return string;
 }
 
-function powers(base, limit, callBack) {
-  return 0;
+function powers(base, limit, callback) {
+  const arr = [];
+  let value = 0;
+  let exp = 0;
+  let nextvalue = 0;
+  while (value < limit && nextvalue <= limit) {
+    value = base ** exp;
+    arr.push(value);
+    callback(value);
+    nextvalue = base ** (exp + 1);
+    exp += 1;
+  }
+  return powers;
+}
+
+function* powersGenerator(base, limit) {
+  let currentPower = 0;
+  let currentValue = base ** currentPower;
+  while (currentValue <= limit) {
+    yield currentValue;
+    currentPower += 1;
+    currentValue = base ** currentPower;
+  }
+}
+
+function say(string) {
+  if (string === undefined) {
+    return '';
+  }
+  return string;
 }
 
 module.exports = {
@@ -40,4 +68,6 @@ module.exports = {
   stripQuotes,
   scramble,
   powers,
+  powersGenerator,
+  say,
 };

@@ -63,6 +63,43 @@ function say(string) {
   return string;
 }
 
+function interleave(...args) {
+  const result = [];
+  const numItems = (args[0].length + args.length) - 1;
+  for (let argumentsPos = 0; argumentsPos < numItems; argumentsPos += 1) {
+    const isEven = argumentsPos % 2 === 0;
+    const isInArray = argumentsPos < args[0].length;
+    const isInArgs = argumentsPos < args.length - 1;
+    const isLastInArray = argumentsPos === args[0].length && argumentsPos !== 0;
+    const isLastInArgs = argumentsPos === args.length - 1;
+    if (isEven) {
+      console.log("Is even.");
+      if (isLastInArray) {
+        result.push(args[0][argumentsPos - (args.length - 1)]);
+      } else if (isInArray && isInArgs) {
+        result.push(args[0][argumentsPos / 2]);
+      } else if (isInArray && !isInArgs) {
+        result.push(args[0][argumentsPos - (args.length - 1)]);
+      } else if (isInArgs && !isInArray) {
+        result.push(args[argumentsPos - (args[0].length - 1)]);
+      }
+    } else if (!isEven) {
+      console.log("Is odd.");
+      if (isLastInArgs) {
+        result.push(args[argumentsPos - (args[0].length - 1)]);
+      } else if (isInArgs && isInArray) {
+        result.push(args[Math.ceil(argumentsPos / 2)]);
+      } else if (isInArgs && !isInArray) {
+        result.push(args[argumentsPos - (args[0].length - 1)]);
+      } else if (isInArray && !isInArgs) {
+        console.log("Going to push: " + args[0][argumentsPos - (args.length - 1)]);
+        result.push(args[0][argumentsPos - (args.length - 1)]);
+      }
+    }
+  }
+  return result;
+}
+
 module.exports = {
   change,
   stripQuotes,
@@ -70,4 +107,5 @@ module.exports = {
   powers,
   powersGenerator,
   say,
+  interleave,
 };

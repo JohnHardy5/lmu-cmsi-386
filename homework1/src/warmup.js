@@ -64,39 +64,25 @@ function say(string) {
 }
 
 function interleave(...args) {
-  const result = [];
-  const numItems = (args[0].length + args.length) - 1;
-  for (let argumentsPos = 0; argumentsPos < numItems; argumentsPos += 1) {
-    const isEven = argumentsPos % 2 === 0;
-    const isInArray = argumentsPos < args[0].length;
-    const isInArgs = argumentsPos < args.length - 1;
-    const isLastInArray = argumentsPos === args[0].length && argumentsPos !== 0;
-    const isLastInArgs = argumentsPos === args.length - 1;
-    if (isEven) {
-      console.log("Is even.");
-      if (isLastInArray) {
-        result.push(args[0][argumentsPos - (args.length - 1)]);
-      } else if (isInArray && isInArgs) {
-        result.push(args[0][argumentsPos / 2]);
-      } else if (isInArray && !isInArgs) {
-        result.push(args[0][argumentsPos - (args.length - 1)]);
-      } else if (isInArgs && !isInArray) {
-        result.push(args[argumentsPos - (args[0].length - 1)]);
-      }
-    } else if (!isEven) {
-      console.log("Is odd.");
-      if (isLastInArgs) {
-        result.push(args[argumentsPos - (args[0].length - 1)]);
-      } else if (isInArgs && isInArray) {
-        result.push(args[Math.ceil(argumentsPos / 2)]);
-      } else if (isInArgs && !isInArray) {
-        result.push(args[argumentsPos - (args[0].length - 1)]);
-      } else if (isInArray && !isInArgs) {
-        console.log("Going to push: " + args[0][argumentsPos - (args.length - 1)]);
-        result.push(args[0][argumentsPos - (args.length - 1)]);
-      }
-    }
+  const firstArray = args.shift();
+  const secondArray = args;
+  if (firstArray.length === 0) {
+    return secondArray;
+  } else if (secondArray.length === 0) {
+    return firstArray;
   }
+  let result = [];
+  let current = 0;
+  function hasNext(val, arr) {
+    return val + 1 < arr.length;
+  }
+  do {
+    result.push(firstArray.shift());
+    result.push(secondArray.shift());
+    current += 1;
+  } while (hasNext(current, firstArray) && hasNext(current, secondArray));
+  result = result.concat(firstArray);
+  result = result.concat(secondArray);
   return result;
 }
 

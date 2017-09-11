@@ -37,10 +37,10 @@ function powers(base, limit, callback) {
   let exp = 0;
   let nextvalue = 0;
   while (value < limit && nextvalue <= limit) {
-    value = base ** exp;
+    value = Math.pow(base, exp);
     arr.push(value);
     callback(value);
-    nextvalue = base ** (exp + 1);
+    nextvalue = Math.pow(base, (exp + 1));
     exp += 1;
   }
   return powers;
@@ -48,11 +48,11 @@ function powers(base, limit, callback) {
 
 function* powersGenerator(base, limit) {
   let currentPower = 0;
-  let currentValue = base ** currentPower;
+  let currentValue = Math.pow(base ,currentPower);
   while (currentValue <= limit) {
     yield currentValue;
     currentPower += 1;
-    currentValue = base ** currentPower;
+    currentValue = Math.pow(base, currentPower);
   }
 }
 
@@ -86,6 +86,38 @@ function interleave(...args) {
   return result;
 }
 
+function cylinder(obj = { radius: 1, height: 1 }) {
+  this.radius = obj.radius;
+  this.height = obj.height;
+
+  function radius() { return this.radius; }
+
+  function height() { return this.height; }
+
+  const surfaceArea = () =>
+    ((2 * (Math.PI) * this.radius * this.height) + (2 * (Math.PI) * (this.radius * this.radius)));
+
+  const volume = () => ((Math.PI) * (this.radius * this.radius) * this.height);
+
+  const widen = (factor) => {
+    this.radius *= factor;
+  };
+  const stretch = (factor) => {
+    this.height *= factor;
+  };
+  const toString = () => `Cylinder with radius ${this.radius} and height ${this.height}`;
+
+  return Object.freeze({
+    radius,
+    height,
+    surfaceArea,
+    volume,
+    widen,
+    stretch,
+    toString,
+  });
+}
+
 module.exports = {
   change,
   stripQuotes,
@@ -94,4 +126,5 @@ module.exports = {
   powersGenerator,
   say,
   interleave,
+  cylinder,
 };

@@ -116,18 +116,18 @@ function cylinder(obj) {
   });
 }
 
-function makeCryptoFunctions(k, alg) {
+function makeCryptoFunctions(key, alg) {
   function encrypt(val) {
-    const key = crypto.createCipher(alg, k);
-    let result = key.update(val, 'utf8', 'hex');
-    result += key.update.final('hex');
+    const cipher = crypto.createCipher(alg, key);
+    let result = cipher.update(val, 'utf8', 'hex');
+    result += cipher.final('hex');
     return result;
   }
 
   function decrypt(val) {
-    const key = crypto.createDecipher(alg, k);
-    let result = key.update(val, 'hex', 'utf8');
-    result += key.update.final('utf8');
+    const cipher = crypto.createDecipher(alg, key);
+    let result = cipher.update(val, 'hex', 'utf8');
+    result += cipher.final('utf8');
     return result;
   }
 

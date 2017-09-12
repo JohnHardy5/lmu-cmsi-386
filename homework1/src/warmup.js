@@ -1,5 +1,7 @@
 // This is homework 1 written by John Hardy and Jordan Sanders
 
+const crypto = require('crypto');
+
 function change(amount) {
   if (amount < 0) {
     throw new RangeError('amount cannot be negative');
@@ -32,23 +34,20 @@ function scramble(arg) {
 }
 
 function powers(base, limit, callback) {
-  const arr = [];
   let value = 0;
   let exp = 0;
   let nextvalue = 0;
   while (value < limit && nextvalue <= limit) {
     value = Math.pow(base, exp);
-    arr.push(value);
     callback(value);
     nextvalue = Math.pow(base, (exp + 1));
     exp += 1;
   }
-  return powers;
 }
 
 function* powersGenerator(base, limit) {
   let currentPower = 0;
-  let currentValue = Math.pow(base ,currentPower);
+  let currentValue = Math.pow(base, currentPower);
   while (currentValue <= limit) {
     yield currentValue;
     currentPower += 1;
@@ -86,36 +85,53 @@ function interleave(...args) {
   return result;
 }
 
-function cylinder(obj = { radius: 1, height: 1 }) {
-  this.radius = obj.radius;
-  this.height = obj.height;
-
-  function radius() { return this.radius; }
-
-  function height() { return this.height; }
+function cylinder(obj) {
+  let { radius = 1, height = 1 } = obj;
 
   const surfaceArea = () =>
-    ((2 * (Math.PI) * this.radius * this.height) + (2 * (Math.PI) * (this.radius * this.radius)));
+    ((2 * (Math.PI) * radius * height) + (2 * (Math.PI) * (radius * radius)));
 
-  const volume = () => ((Math.PI) * (this.radius * this.radius) * this.height);
+  const volume = () => ((Math.PI) * (radius * radius) * height);
 
   const widen = (factor) => {
-    this.radius *= factor;
+    radius *= factor;
   };
   const stretch = (factor) => {
-    this.height *= factor;
+    height *= factor;
   };
-  const toString = () => `Cylinder with radius ${this.radius} and height ${this.height}`;
+  const toString = () => `Cylinder with radius ${radius} and height ${height}`;
 
   return Object.freeze({
-    radius,
-    height,
+    get radius() {
+      return radius;
+    },
+    get height() {
+      return height;
+    },
     surfaceArea,
     volume,
     widen,
     stretch,
     toString,
   });
+}
+
+function makeCryptoFunctions(k, alg) {
+  function encrypt(val) {
+    const key = crypto.createCipher(alg, k);
+    let result = key.update(val, 'utf8', 'hex');
+    result += key.update.final('hex');
+    return result;
+  }
+
+  function decrypt(val) {
+    const key = crypto.createDecipher(alg, k);
+    let result = key.update(val, 'hex', 'utf8');
+    result += key.update.final('utf8');
+    return result;
+  }
+
+  return [encrypt, decrypt];
 }
 
 module.exports = {
@@ -127,4 +143,5 @@ module.exports = {
   say,
   interleave,
   cylinder,
+  makeCryptoFunctions,
 };

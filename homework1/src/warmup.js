@@ -34,7 +34,7 @@ function scramble(arg) {
 }
 
 function powers(base, limit, callback) {
-  let current = 1
+  let current = 1;
   for (let exp = 1; current <= limit; exp += 1) {
     callback(current);
     current = Math.pow(base, exp);
@@ -49,11 +49,17 @@ function* powersGenerator(base, limit) {
   }
 }
 
-function say(string) {
-  if (string === undefined) {
-    return '';
+function say(str) {
+  let result = '';
+  function recurse(str2) {
+    if (!str2) {
+      result = result.substring(0, result.length - 1);
+      return result;
+    }
+    result += `${str2} `;
+    return recurse;
   }
-  return string;
+  return recurse(str);
 }
 
 function interleave(...args) {
@@ -130,8 +136,6 @@ function makeCryptoFunctions(key, alg) {
 
 function randomName(obj) {
   let { gender, region } = obj;
-
-
 }
 
 module.exports = {

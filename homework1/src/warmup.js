@@ -34,24 +34,18 @@ function scramble(arg) {
 }
 
 function powers(base, limit, callback) {
-  let value = 0;
-  let exp = 0;
-  let nextvalue = 0;
-  while (value < limit && nextvalue <= limit) {
-    value = Math.pow(base, exp);
-    callback(value);
-    nextvalue = Math.pow(base, (exp + 1));
-    exp += 1;
+  let current = 1
+  for (let exp = 1; current <= limit; exp += 1) {
+    callback(current);
+    current = Math.pow(base, exp);
   }
 }
 
 function* powersGenerator(base, limit) {
-  let currentPower = 0;
-  let currentValue = Math.pow(base, currentPower);
-  while (currentValue <= limit) {
-    yield currentValue;
-    currentPower += 1;
-    currentValue = Math.pow(base, currentPower);
+  let current = 1;
+  for (let exp = 1; current <= limit; exp += 1) {
+    yield current;
+    current = Math.pow(base, exp);
   }
 }
 
@@ -134,6 +128,12 @@ function makeCryptoFunctions(key, alg) {
   return [encrypt, decrypt];
 }
 
+function randomName(obj) {
+  let { gender, region } = obj;
+
+
+}
+
 module.exports = {
   change,
   stripQuotes,
@@ -144,4 +144,5 @@ module.exports = {
   interleave,
   cylinder,
   makeCryptoFunctions,
+  randomName,
 };

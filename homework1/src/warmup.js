@@ -1,5 +1,6 @@
 // This is homework 1 written by John Hardy and Jordan Sanders
 
+const rp = require('request-promise');
 const crypto = require('crypto');
 
 function change(amount) {
@@ -135,7 +136,17 @@ function makeCryptoFunctions(key, alg) {
 }
 
 function randomName(obj) {
-  let { gender, region } = obj;
+  const { gender, region } = obj;
+  const options = {
+    uri: 'http://uinames.com/api/',
+    qs: {
+      gender,
+      region,
+      amount: 1,
+    },
+    json: true,
+  };
+  return rp(options).then(person => `${person.surname}, ${person.name}`);
 }
 
 module.exports = {

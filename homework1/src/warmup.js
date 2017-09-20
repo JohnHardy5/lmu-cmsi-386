@@ -1,5 +1,6 @@
 // This is homework 1 written by John Hardy and Jordan Sanders
 
+const rp = require('request-promise');
 const crypto = require('crypto');
 
 function change(amount) {
@@ -37,22 +38,22 @@ function powers(base, limit, callback) {
   let current = 1;
   for (let exp = 1; current <= limit; exp += 1) {
     callback(current);
-    current = Math.pow(base, exp);
+    current = Math.pow(base, exp);// Node.js problems, cannot use **
   }
 }
 
 function* powersGenerator(base, limit) {
-  let current = 1;
-  for (let exp = 1; current <= limit; exp += 1) {
-    yield current;
-    current = Math.pow(base, exp);
+  const pwrs = [];
+  powers(base, limit, power => pwrs.push(power));// Style points
+  for (let i = 0; i < pwrs.length; i += 1) {
+    yield pwrs[i];
   }
 }
 
 function say(str) {
   let result = '';
   function recurse(str2) {
-    if (!str2) {
+    if (str2 === undefined) {
       result = result.substring(0, result.length - 1);
       return result;
     }
@@ -135,7 +136,17 @@ function makeCryptoFunctions(key, alg) {
 }
 
 function randomName(obj) {
-  let { gender, region } = obj;
+  const { gender, region } = obj;
+  const options = {
+    uri: 'http://uinames.com/api/',
+    qs: {
+      gender,
+      region,
+      amount: 1,
+    },
+    json: true,
+  };
+  return rp(options).then(person => `${person.surname}, ${person.name}`);
 }
 
 module.exports = {

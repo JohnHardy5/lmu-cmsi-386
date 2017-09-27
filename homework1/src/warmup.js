@@ -38,15 +38,13 @@ function powers(base, limit, callback) {
   let current = 1;
   for (let exp = 1; current <= limit; exp += 1) {
     callback(current);
-    current = Math.pow(base, exp);// Node.js problems, cannot use **
+    current = base ** exp;
   }
 }
 
-function* powersGenerator(base, limit) {
-  const pwrs = [];
-  powers(base, limit, power => pwrs.push(power));// Style points
-  for (let i = 0; i < pwrs.length; i += 1) {
-    yield pwrs[i];
+function* powersGenerator(base, limit) { // eslint-disable-line func-names
+  for (let x = 1; x <= limit; x *= base) {
+    yield x;
   }
 }
 

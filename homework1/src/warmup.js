@@ -42,11 +42,9 @@ function powers(base, limit, callback) {
   }
 }
 
-function* powersGenerator(base, limit) {
-  const pwrs = [];
-  powers(base, limit, power => pwrs.push(power));
-  for (let i = 0; i < pwrs.length; i += 1) {
-    yield pwrs[i];
+function* powersGenerator(base, limit) { // eslint-disable-line func-names
+  for (let x = 1; x <= limit; x *= base) {
+    yield x;
   }
 }
 

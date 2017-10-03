@@ -38,21 +38,23 @@ def powers():
 
 def triples(limit):
     """Return a list of all pythagorean triples up to and including a limit."""
-    result = []
-    for a in range(1, (limit + 1)):
-        for b in range(1, (limit + 1)):
-            for c in range(1, (limit + 1)):
-                if a ** (2) + b ** (2) == c ** (2):
-                    result.insert(0, (a, b, c))
-                    print("Current list: " + str(result))
-                    if len(result) > 1:
-                        print("Comparison of first two: " + str(result[0] == result[1]))
-    return result
+    return [(a, b, c)
+            for a in range(1, (limit + 1))
+            for b in range(1, (limit + 1))
+            for c in range(1, (limit + 1))
+            if a**2 + b**2 == c**2 and a < b and b < c]
 
 
-def say():
+def say(start_word=None):
     """Chainable function that returns a word based on chained arguments."""
-    pass
+    result = []
+
+    def say_again(word=None):  # optional arguments ftw
+        if word is None:
+            return " ".join(result)
+        result.append(word)
+        return say_again
+    return say_again(start_word)
 
 
 def interleave():

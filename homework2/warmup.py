@@ -2,6 +2,7 @@
 
 import random
 from Crypto.Cipher import AES
+import requests
 
 
 def change(cents_left):
@@ -88,6 +89,17 @@ def make_crypto_functions(key, vector):
     return (encrypt, decrypt)
 
 
-def random_name():
+def random_name(gender, region):
     """Return a random name from the uinames API."""
-    pass
+    pay_load = {"gender": gender, "region": region, "amount": 1}
+    r = requests.get("http://uinames.com/api/", params=pay_load)
+    response = r.text
+    if response == '{"error":"Invalid gender"}':
+        raise ValueError(response)
+    surname = ""
+    for i in range(response.find('rname":"') + 8, response.find('","g')):
+        surname += response[i]
+    name = ""
+    for i in range(response.find('"name":"') + 8, response.find('","s')):
+        name += response[i]
+    return surname + ", " + name

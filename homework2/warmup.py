@@ -1,6 +1,7 @@
 """Homework assignment 2 written by John Hardy and Jordan Sanders."""
 
 import random
+from Crypto.Cipher import AES
 
 
 def change(cents_left):
@@ -47,7 +48,7 @@ def say(start_word=None):
     """Chainable function that returns a word based on chained arguments."""
     result = []
 
-    def say_again(word=None):  # optional arguments ftw
+    def say_again(word=None):
         if word is None:
             return " ".join(result)
         result.append(word)
@@ -73,9 +74,18 @@ def Cylinder():
     pass
 
 
-def make_crypto_functions():
+def make_crypto_functions(key, vector):
     """Use an AES algorithmn to encrypt or decrypt a vector given a key."""
-    pass
+    new_key, new_vector = bytes(key, "utf-8"), bytes(vector, "utf-8")
+
+    def encrypt(to_encrypt):
+        encryption_suite = AES.new(new_key, AES.MODE_CBC, new_vector)
+        return encryption_suite.encrypt(to_encrypt)
+
+    def decrypt(to_decrypt):
+        decryption_suite = AES.new(new_key, AES.MODE_CBC, new_vector)
+        return decryption_suite.decrypt(to_decrypt)
+    return (encrypt, decrypt)
 
 
 def random_name():

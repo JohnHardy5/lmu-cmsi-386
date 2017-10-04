@@ -57,9 +57,17 @@ def say(start_word=None):
     return say_again(start_word)
 
 
-def interleave():
+def interleave(*arguments):
     """Interleave first argument array with remaining arguments."""
-    pass
+    first_array = arguments[0]
+    largest = max(len(first_array), len(arguments) - 1)
+    result = []
+    for i in range(largest):
+        if i < len(first_array):
+            result.append(first_array[i])
+        if i < len(arguments) - 1:
+            result.append(arguments[i + 1])
+    return result
 
 
 def Cylinder():

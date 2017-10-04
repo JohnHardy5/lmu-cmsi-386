@@ -22,13 +22,11 @@ def strip_quotes():
 
 def scramble(string):
     """Randomly permute a given string."""
-    if string == "":
-        return ""
-    random_element = random.randrange(0, len(string))
-    random_char = string[random_element]
-    string = string[:random_element] + string[random_element + 1:]
-    string = random_char + scramble(string)
-    return string
+    result = list(string)
+    for x in range(len(result)):
+        random_element = random.randrange(len(string))
+        result[x], result[random_element] = result[random_element], result[x]
+    return "".join(result)
 
 
 def powers():

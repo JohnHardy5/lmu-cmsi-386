@@ -32,10 +32,15 @@ def scramble(string):
     return "".join(result)
 
 
-def powers():
+def powers(base, limit):
     """Yield succesive powers of a base from one to a specific limit."""
-    pass
-
+    
+    count, future = 0, 0
+    while future <= limit:
+        current = base ** count
+        yield current
+        future = base ** (count + 1)
+        count += 1
 
 def triples(limit):
     """Return a list of all pythagorean triples up to and including a limit."""
@@ -71,9 +76,23 @@ def interleave(*arguments):
     return result
 
 
-def Cylinder():
+class Cylinder:
     """Create a Python class for a Cylinder."""
-    pass
+    def __init__(self, radius=1, height=1):
+        self.radius = radius
+        self.height = height
+
+    def surface_area(self):
+        return 2 * math.pi * self.radius * (self.height + self.radius)
+
+    def volume(self):
+        return math.pi * self.radius ** 2 * self.height
+
+    def widen(self, widenfactor):
+        self.radius *= widenfactor
+
+    def stretch(self, stretchfactor):
+        self.height *= stretchfactor
 
 
 def make_crypto_functions(key, vector):

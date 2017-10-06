@@ -17,9 +17,10 @@ def change(cents_left):
     return tuple(denominations)
 
 
-def strip_quotes():
+def strip_quotes(s):
     """Remove apostrophes and double quotes from a given string."""
-    pass
+    s = s.replace("'", "")
+    return s.replace('"', '')
 
 
 def scramble(string):

@@ -78,25 +78,34 @@ class Cylinder:
     """Create a Python class for a Cylinder."""
 
     def __init__(self, radius=1, height=1):
-        """Give radius of cylinder."""
+        """Initialize cylinder."""
         self.radius = radius
         self.height = height
 
+    @property
     def surface_area(self):
         """Give surface area of cylinder."""
         return 2 * math.pi * self.radius * (self.height + self.radius)
 
+    @property
     def volume(self):
         """Give volume of cylinder."""
-        return math.pi * self.radius ** 2 * self.height
+        return math.pi * self.radius**2 * self.height
 
     def widen(self, widenfactor):
         """Widen the cylinder."""
         self.radius *= widenfactor
+        return self
 
     def stretch(self, stretchfactor):
         """Stretch the cylinder."""
         self.height *= stretchfactor
+        return self
+
+    def __repr__(self):
+        """Represent cylinder."""
+        return "Cylinder with radius={} and height={}".format(
+            self.radius, self.height)
 
 
 def make_crypto_functions(key, vector):

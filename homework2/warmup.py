@@ -3,6 +3,7 @@
 import random
 from Crypto.Cipher import AES
 import requests
+import math
 
 
 def change(cents_left):
@@ -19,8 +20,7 @@ def change(cents_left):
 
 def strip_quotes(s):
     """Remove apostrophes and double quotes from a given string."""
-    s = s.replace("'", "")
-    return s.replace('"', '')
+    return s.replace("'", "").replace('"', '')
 
 
 def scramble(string):
@@ -34,13 +34,11 @@ def scramble(string):
 
 def powers(base, limit):
     """Yield succesive powers of a base from one to a specific limit."""
-    
-    count, future = 0, 0
-    while future <= limit:
-        current = base ** count
-        yield current
-        future = base ** (count + 1)
-        count += 1
+    power = 1
+    while power <= limit:
+        yield power
+        power *= base
+
 
 def triples(limit):
     """Return a list of all pythagorean triples up to and including a limit."""
@@ -78,20 +76,26 @@ def interleave(*arguments):
 
 class Cylinder:
     """Create a Python class for a Cylinder."""
+
     def __init__(self, radius=1, height=1):
+        """Give radius of cylinder."""
         self.radius = radius
         self.height = height
 
     def surface_area(self):
+        """Give surface area of cylinder."""
         return 2 * math.pi * self.radius * (self.height + self.radius)
 
     def volume(self):
+        """Give volume of cylinder."""
         return math.pi * self.radius ** 2 * self.height
 
     def widen(self, widenfactor):
+        """Widen the cylinder."""
         self.radius *= widenfactor
 
     def stretch(self, stretchfactor):
+        """Stretch the cylinder."""
         self.height *= stretchfactor
 
 

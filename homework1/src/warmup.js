@@ -1,4 +1,4 @@
-// This is homework 1 written by John Hardy and Jordan Sanders
+// This is homework 2 written by John Hardy and Jordan Sanders, linter = pylama
 
 const rp = require('request-promise');
 const crypto = require('crypto');

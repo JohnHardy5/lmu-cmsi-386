@@ -3,6 +3,7 @@
 import random
 from Crypto.Cipher import AES
 import requests
+import math
 
 
 def change(cents_left):
@@ -17,9 +18,9 @@ def change(cents_left):
     return tuple(denominations)
 
 
-def strip_quotes():
+def strip_quotes(s):
     """Remove apostrophes and double quotes from a given string."""
-    pass
+    return s.replace("'", "").replace('"', '')
 
 
 def scramble(string):
@@ -31,9 +32,12 @@ def scramble(string):
     return "".join(result)
 
 
-def powers():
+def powers(base, limit):
     """Yield succesive powers of a base from one to a specific limit."""
-    pass
+    power = 1
+    while power <= limit:
+        yield power
+        power *= base
 
 
 def triples(limit):
@@ -70,9 +74,38 @@ def interleave(*arguments):
     return result
 
 
-def Cylinder():
+class Cylinder:
     """Create a Python class for a Cylinder."""
-    pass
+
+    def __init__(self, radius=1, height=1):
+        """Initialize cylinder."""
+        self.radius = radius
+        self.height = height
+
+    @property
+    def surface_area(self):
+        """Give surface area of cylinder."""
+        return 2 * math.pi * self.radius * (self.height + self.radius)
+
+    @property
+    def volume(self):
+        """Give volume of cylinder."""
+        return math.pi * self.radius**2 * self.height
+
+    def widen(self, widenfactor):
+        """Widen the cylinder."""
+        self.radius *= widenfactor
+        return self
+
+    def stretch(self, stretchfactor):
+        """Stretch the cylinder."""
+        self.height *= stretchfactor
+        return self
+
+    def __repr__(self):
+        """Represent cylinder."""
+        return "Cylinder with radius={} and height={}".format(
+            self.radius, self.height)
 
 
 def make_crypto_functions(key, vector):

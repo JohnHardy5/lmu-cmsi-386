@@ -7,7 +7,7 @@ struct {
 ```
 On your machine, find the address of A[0][0] and A[3][7]. Explain why these values are what you found them to be.
 
-> Answer here!
+> It seems that the addresses grow in increments of 8 and 2. My assumption here is that the size of an int is larger than a char, so the first value stores the int, and the next stores a char.
 
 ### 2. (5 pts) Explain the meaning of the following C++ declarations:
 ```c++
@@ -16,7 +16,7 @@ double (*b)[n];
 double (*c[n])();
 double (*d())[n];
 ```
-> Answer here!
+> The first declaration is an array of pointers to doubles, with the double n being accessed. The second is a pointer to an array of doubles, with the value n being accessed from the array. The third declaration is a pointer to an array of functions that return a double, with the function n being accessed. The last declaration is a pointer to a function which returns an array of doubles, with the double n being accessed from the array.
 
 ### 3. (5 pts) Consider the following declaration in C++:
 ```c++

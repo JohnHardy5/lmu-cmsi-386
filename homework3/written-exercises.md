@@ -64,4 +64,10 @@ Verify that the answer you obtained is the same that would be inferred from appl
 > Just as I had predicted, the output was 2, 5, 2 since f only references the GLOBAL (to the class) x, not the local x in g(). Ditto for the main() function. If C++ used dynamic scoping, then the output would have been 5, 5, 2 since f() would have accessed the local x dynamically, once we leave the scope of g(), the main() function then accesses the global x.
 
 ### 6. (5 pts) Suppose you were asked to write a function to scramble (shuffle) a given array, in a mutable fashion. Give the function signature for a shuffle function for (a) a raw array, and (b) a std::array.
-> (a) 
+> (a) void scramble(int arr[n]) {//no need to include a reference
+        ...
+      }
+
+  (b) void shuffle(array<int, n>& arr) {//reference required
+        ...
+      }

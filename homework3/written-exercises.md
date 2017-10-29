@@ -68,6 +68,6 @@ Verify that the answer you obtained is the same that would be inferred from appl
         ...
       }
 
-  (b) void shuffle(array<int, n>& arr) {//reference required
+>  (b) void shuffle(array<int, n>& arr) {//reference required
         ...
       }

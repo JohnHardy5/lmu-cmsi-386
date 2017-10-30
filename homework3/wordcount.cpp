@@ -2,17 +2,16 @@
 #include <assert.h>
 #include <string>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 void remove_nonletters(string &input) {
-  for (unsigned int i = 0; i < input.length(); i++) {
+  for (int i = 0; i < (signed int)input.length(); i++) {
     //std::cout << "Current character: " << input[i] << "   Current position: " << i << '\n';
     input[i] = tolower(input[i]);
     if (!isalpha(input[i])) {
       if (i == 0 || (i > 0 && isspace(input[i - 1]))) {
         input.replace(i, 1, "");
-        i = (i == 0) ? 0 : i - 1;
+        i = (i == 0) ? -1 : i - 1;
       } else {
         input.replace(i, 1, " ");
       }
@@ -105,21 +104,22 @@ string wordcount(string &input) {
 }
 
 int main() {
-  string generaltest = "The tests, my lord,have failed! FAILED have   the   tests,   they   have.";
-  string testcaps = "  Hello Hello hello HeLlO hELlo   ";
-  string testnothing = "";
-  string testnonletters = ";:&^$#@!'. .'&*()(*&%%^^){}[{]|,|||}]";
-  string testcomplex = "(((((((($$$sNEAky$$$))))))))";
-  string testacouple = "!!!THIS_IS_NOT_A_COUPLE!!!!-*lol_jk*";
+  string general_test = "The tests, my lord,have failed! FAILED have   the   tests,   they   have.";
+  string test_caps = "   Hello Hello hello HeLlO hELlo   ";
+  string test_nothing = "";
+  string test_space = "     ";
+  string test_nonletters = ";:&^$#@!'. .'&*()(*&%%^^){}[{]|,|||}]";
+  string test_complex = "(((((((($$$sNEAky$$$))))))))";
+  string test_a_couple = "!!!THIS_IS_NOT_A_COUPLE!!!!-*lol_jk*";
 
   try {
-    assert(wordcount(generaltest) == "have 3\nfailed 2\ntests 2\nthe 2\nlord 1\nmy 1\nthey 1");
-    assert(wordcount(testcaps) == "hello 5");
-    assert(wordcount(testnothing) == "");
-    assert(wordcount(testnonletters) == "");
-    assert(wordcount(testcomplex) == "sneaky 1");
-    assert(wordcount(testacouple) == "this 1\nis 1\nnot 1\na 1\ncouple 1\nlol 1\njk 1\n");
-
+    assert(wordcount(general_test) == "have 3\nfailed 2\nthe 2\ntests 2\nlord 1\nthey 1\nmy 1\n");
+    assert(wordcount(test_caps) == "hello 5\n");
+    assert(wordcount(test_nothing) == "");
+    assert(wordcount(test_space) == "");
+    assert(wordcount(test_nonletters) == "");
+    assert(wordcount(test_complex) == "sneaky 1\n");
+    assert(wordcount(test_a_couple) == "this 1\nis 1\nnot 1\na 1\ncouple 1\nlol 1\njk 1\n");
   } catch (exception &e) {
     cout << e.what() << "\n";
   }

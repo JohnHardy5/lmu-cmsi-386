@@ -24,7 +24,7 @@ double (*f(double (*)(double, double[]), double)) (double, ...);
 ```
 Describe rigorously, in English, the type of f.
 
-> The best way to answer this question is to start on the outside an peel away the layers. We know for a fact that what must be returned from all of this is a double. On the far right we see what looks like a set of arguments being supplied to a function so the first set of parenthesis must be a function that accepts a double and then an arbitrary number of arguments afterwards. Inside the first group of parenthesis, we see what looks like a pointer to a function that accepts a double and a pointer to another function. This final function accepts a double, and array of doubles, and another double as its arguments.
+> The best way to answer this question is to start on the outside an peel away the layers. We know for a fact that what must be returned from all of this is a double. On the far right we see what looks like a set of arguments being supplied to a function so the first set of parenthesis must be a function that accepts a double and then an arbitrary number of arguments afterwards. Inside the first group of parenthesis, we see what looks like a pointer to a function that accepts a pointer to another function which returns a double, and a double as its arguments. This final innermost function accepts a double, and an array of doubles. To summarize, f is a pointer to a function with two doubles as it arguments, the first double coming from another pointer to another function.
 
 ### 4. (5 pts) What happens when we “redefine” a field in a C++ subclass? For example, suppose we have:
 ```c++
@@ -68,6 +68,6 @@ Verify that the answer you obtained is the same that would be inferred from appl
         ...
       }
 
->  (b) void shuffle(array<int, n>& arr) {//reference required
+> (b) void shuffle(array<int, n>& arr) {//reference required
         ...
       }

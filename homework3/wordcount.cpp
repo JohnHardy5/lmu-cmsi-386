@@ -17,15 +17,19 @@ void remove_nonletters(string &input) {
       }
     }
   }
+  if (input.length() > 0 && !isspace(input[input.length() - 1])) {
+    input.append(" ");
+  }
   std::cout << "Non-letters removed: " << input << '\n';
 }
 
 vector<string> group_words_in_vector(string &input) {
+  std::cout << "Input: " << input << '\n';
   vector<string> words;
   int pivot = 0;
   for (unsigned int i = 0; i < input.length(); i++) {
-    if (isspace(input[i])) {
-      //std::cout << "Replacing input: " << input.substr(pivot, i - pivot + 1) << '\n';
+    if (isspace(input[i]) || i == input.length() - 1) {
+      std::cout << "Replacing input: " << input.substr(pivot, i - pivot + 1) << '\n';
       words.push_back(input.substr(pivot, i - pivot + 1));
       pivot = i + 1;
     }
@@ -69,6 +73,7 @@ string convert_vector_to_string(vector<string> &words) {
 }
 
 void group_similar_words(string &input) {
+  std::cout << "Input: " << input << '\n';
   vector<string> words = group_words_in_vector(input);
   vector<int> wordscount;
   for (int i = words.size() - 1; i >= 0; i--) {
@@ -106,23 +111,32 @@ string wordcount(string &input) {
 int main() {
   string general_test = "The tests, my lord,have failed! FAILED have   the   tests,   they   have.";
   string test_caps = "   Hello Hello hello HeLlO hELlo   ";
+  string test_letter = "G";
+  string test_word = "GiT";
   string test_nothing = "";
-  string test_space = "     ";
+  string test_space = " ";
+  string test_spaces = "   ";
   string test_nonletters = ";:&^$#@!'. .'&*()(*&%%^^){}[{]|,|||}]";
   string test_complex = "(((((((($$$sNEAky$$$))))))))";
   string test_a_couple = "!!!THIS_IS_NOT_A_COUPLE!!!!-*lol_jk*";
+  string test_emojis = "😄🍰😞yay!emojis!🐷👩";
+  string test_weird = "в聲字вwtfЖ_ЛareЙ_字яtheseЮ_пфthings形?";
 
   try {
     assert(wordcount(general_test) == "have 3\nfailed 2\nthe 2\ntests 2\nlord 1\nthey 1\nmy 1\n");
     assert(wordcount(test_caps) == "hello 5\n");
+    assert(wordcount(test_letter) == "g 1\n");
+    assert(wordcount(test_word) == "git 1\n");
     assert(wordcount(test_nothing) == "");
     assert(wordcount(test_space) == "");
+    assert(wordcount(test_spaces) == "");
     assert(wordcount(test_nonletters) == "");
     assert(wordcount(test_complex) == "sneaky 1\n");
     assert(wordcount(test_a_couple) == "this 1\nis 1\nnot 1\na 1\ncouple 1\nlol 1\njk 1\n");
+    assert(wordcount(test_emojis) == "yay 1\nemojis 1\n");
+    assert(wordcount(test_weird) == "wtf 1\nare 1\nthese 1\nthings 1\n");
   } catch (exception &e) {
     cout << e.what() << "\n";
   }
-
-  std::cout << "All tests passed!\n" << '\n';
+  std::cout << "All tests passed!\n";
 }

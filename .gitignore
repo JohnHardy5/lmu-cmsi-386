@@ -1,13 +1,13 @@
+test.cpp
+a.exe
+
 env
 .cache
 __pycache__
 *.pyc
+
 node_modules/
 package-lock.json
-env
-.cache
-__pycache__
-*.pyc
 
 # Xcode
 #

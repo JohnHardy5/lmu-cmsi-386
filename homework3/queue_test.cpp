@@ -7,6 +7,6 @@ int main() {
     int six = 6;
     int five = 5;
     
-    cout << "Create list holding '10'" << endl;
+    cout << "Create queue holding 9 and 8 with a size of 2" << endl;
     Queue<T> *test_queue = new Queue(&nine,&eight,2);
 }

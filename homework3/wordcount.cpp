@@ -1,40 +1,65 @@
 #include <iostream>
 #include <assert.h>
-#include <string>
 #include <vector>
 using namespace std;
 
-void remove_nonletters(string &input) {
-  for (int i = 0; i < (signed int)input.length(); i++) {
-    //std::cout << "Current character: " << input[i] << "   Current position: " << i << '\n';
-    input[i] = tolower(input[i]);
-    if (!isalpha(input[i])) {
-      if (i == 0 || (i > 0 && isspace(input[i - 1]))) {
-        input.replace(i, 1, "");
+string remove_nonletters(const string& input) {
+  string result = input;
+  for (int i = 0; i < (signed int)result.length(); i++) {
+    std::cout << "Current character: " << input[i] << "   Current position: " << i << '\n';
+    result[i] = tolower(result[i]);
+    if (!isalpha(result[i])) {
+      if (i == 0 || (i > 0 && isspace(result[i - 1]))) {
+        result.replace(i, 1, "");
         i = (i == 0) ? -1 : i - 1;
       } else {
-        input.replace(i, 1, " ");
+        result.replace(i, 1, " ");
       }
     }
   }
-  if (input.length() > 0 && !isspace(input[input.length() - 1])) {
-    input.append(" ");
+  if (result.length() > 0 && !isspace(result[result.length() - 1])) {
+    result.append(" ");
   }
-  std::cout << "Non-letters removed: " << input << '\n';
+  std::cout << "Non-letters removed: " << result << '\n';
+  return result;
 }
 
-vector<string> group_words_in_vector(string &input) {
-  std::cout << "Input: " << input << '\n';
-  vector<string> words;
+vector<string> group_words_in_vector(const string& input) {
+  cout << "Input: " << input << '\n';
+  vector<string> result;
   int pivot = 0;
   for (unsigned int i = 0; i < input.length(); i++) {
     if (isspace(input[i]) || i == input.length() - 1) {
       std::cout << "Replacing input: " << input.substr(pivot, i - pivot + 1) << '\n';
-      words.push_back(input.substr(pivot, i - pivot + 1));
+      result.push_back(input.substr(pivot, i - pivot + 1));
       pivot = i + 1;
     }
   }
-  return words;
+  return result;
+}
+
+vector<string> group_similar_words(const vector<string>& words, vector<int>& wordscount) {
+  vector<string> result = words;
+  for (int i = result.size() - 1; i >= 0; i--) {
+    wordscount.insert(wordscount.begin(), 1);
+    //std::cout << "New word count added." << '\n';
+    //std::cout << "Current word: " << words[i] << '\n';
+    for (int j = i - 1; j >= 0; j--) {
+      if (result[i] == result[j]) {
+        //std::cout << "Found match: " << words[i] << "and " << words[j] << '\n';
+        //std::cout << "Adding to the front of word count." << '\n';
+        wordscount.front()++;
+        //std::cout << "Erasing position: " << to_string(j) << '\n';
+        //std::cout << "Before erase: " << words[j + 1] << ", " << words[j] << ", " << words[j - 1] << '\n';
+        result.erase(result.begin() + j);
+        //std::cout << "After erase: " << words[j + 1] << ", " << words[j] << ", " << words[j - 1] << '\n';
+        i--;
+      }
+    }
+    result[i] = result[i] + to_string(wordscount.front()) + "\n";
+    std::cout << "Grouping similar words: " << result[i];
+  }
+  return result;
 }
 
 vector<string> sort_words_large_to_small(vector<string> &words, vector<int> &wordscount) {
@@ -61,51 +86,25 @@ vector<string> sort_words_large_to_small(vector<string> &words, vector<int> &wor
     wordscount[largestPosition] = tempInt;
     //std::cout << "Swapped words: " << words[i] << "and " << words[largestPosition];
   }
-  //std::cout << "First word: " << words[0];
   return words;
 }
 
-string convert_vector_to_string(vector<string> &words) {
-  //std::cout << "First word: " << words[0];
+string convert_vector_to_string(const vector<string> &words) {
   string result = "";
   for (string const& word : words) { result += word; }
   return result;
 }
 
-void group_similar_words(string &input) {
-  std::cout << "Input: " << input << '\n';
-  vector<string> words = group_words_in_vector(input);
+string wordcount(const string &input) {
+  string result = input;
+  result = remove_nonletters(result);
+  vector<string> words = group_words_in_vector(result);
   vector<int> wordscount;
-  for (int i = words.size() - 1; i >= 0; i--) {
-    wordscount.insert(wordscount.begin(), 1);
-    //std::cout << "New word count added." << '\n';
-    //std::cout << "Current word: " << words[i] << '\n';
-    for (int j = i - 1; j >= 0; j--) {
-      if (words[i] == words[j]) {
-        //std::cout << "Found match: " << words[i] << "and " << words[j] << '\n';
-        //std::cout << "Adding to the front of word count." << '\n';
-        wordscount.front()++;
-        //std::cout << "Erasing position: " << to_string(j) << '\n';
-        //std::cout << "Before erase: " << words[j + 1] << ", " << words[j] << ", " << words[j - 1] << '\n';
-        words.erase(words.begin() + j);
-        //std::cout << "After erase: " << words[j + 1] << ", " << words[j] << ", " << words[j - 1] << '\n';
-        i--;
-      }
-    }
-    words[i] = words[i] + to_string(wordscount.front()) + "\n";
-    std::cout << "Grouping similar words: " << words[i];
-  }
-  //std::cout << "First word: " << words[0];
+  words = group_similar_words(words, wordscount);
   words = sort_words_large_to_small(words, wordscount);
-  //std::cout << "First word: " << words[0];
-  input = convert_vector_to_string(words);
-}
-
-string wordcount(string &input) {
-  remove_nonletters(input);
-  group_similar_words(input);
-  std::cout << "Final string: " << input << "\n";
-  return input;
+  result = convert_vector_to_string(words);
+  std::cout << "Final string: " << result << "\n";
+  return result;
 }
 
 int main() {

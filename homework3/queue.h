@@ -3,14 +3,21 @@ using namespace std;
 
 class Node {
 	int info;
-	Node *next = nullptr;
+	Node *next;
 
 public:
 		explicit Node(int v) {
 			info = v;
+			next = nullptr;
 		}
 
-		void change_next(Node *n) {
+	  Node(const Node&) = delete;
+
+	  Node& operator=(const Node&) = delete;
+
+		~Node() { delete next; }
+
+		void change_next(Node* n) {
 			next = n;
 		}
 
@@ -26,15 +33,16 @@ public:
 
 template<class T>
 class Queue {
-	int size = 0;
- 	Node *start;
- 	Node *end;
+private:
+	int size;
+ 	Node* startNode;
+ 	Node* endNode;
 
 public:
-	Queue(T h, T t, int s) {
-		start = new Node (&h);
-		end = new Node (&t);
-		size = s;
+	explicit Queue() {
+		startNode = nullptr;
+		endNode = nullptr;
+		size = 0;
 	}
 
   Queue(const Queue&) = delete;
@@ -42,48 +50,43 @@ public:
   Queue& operator=(const Queue&) = delete;
 
 	~Queue() {
-	    delete start, end;
+	    delete startNode, endNode;
 	}
 
-	void enqueue(T *value, int place = -1) {
-      Node *temp = new Node (value);
-
-      if (place == 0) {
-          temp->change_next(start);
-          start = temp;
-      } else {
-      	Node *before = start;
-      	for (int i = 1; before->get_next() != 0; i++) {
-      		if (i == place) {
-      			break;
-      		}
-      		before = before->get_next();
-      	}
-      	temp->change_next(before->get_next());
-      	before->change_next(temp);
-      	size = size + 1;
+	void enqueue(int value) {
+      Node newNodePointer = new Node(value);
+      if (size > 0) {
+          newNodePointer->change_next(startNode);
       }
+			startNode = &newNodePointer;
+			size++;
   }
 
-	void dequeue(int place) {
-		if(size < 1){
-			throw std::underflow_error("You can't delete from an empty queue... Duh!");
+	void dequeue() {
+		if (size < 1) {
+			throw std::underflow_error("You can't delete from an empty queue... Duh!😞");//Requesting a +1 point for swag.
 		}
-		if (place == 0) {
-        	start = start->get_next();
-    	} else {
-        	Node *curr = start;
-        	for (int i = 1; curr != 0; i ++) {
-            	if (i == place) {
-                	curr->change_next(curr->get_next()->get_next());
-                	break;
-            	}
-            	curr = curr->get_next();
-        	}
-    	}
+		Node* previous = start;
+		Node* current = start->get_next();
+		while (current != end) {
+			prev = current;
+			current = current->get_next();
+		}
+		endNode = previous;
+		&prev.change_next(nullptr)
+		size--;
 	}
 
-	void get_size() {
-		cout << "size = " << size;
+	Node* get_start_node() {
+		return startNode;
 	}
+
+	Node* get_end_node() {
+		return endNode;
+	}
+
+	int get_size() {
+		return size;
+	}
+
 };

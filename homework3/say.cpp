@@ -3,19 +3,30 @@
 #include <functional>
 using namespace std;
 
-function<string (string)> say(const string &start_word="") {
-    string result = "";
-    return [&result] (string next_word="") {
-      if (next_word == "") {
-        return result;
-      }
-      return (string)"";
-    };
+struct Sayer {
+private:
+  string current_words = "";
+public:
+  Sayer explicit(const string& word=""): current_words(word) {}
+
+  /*Sayer operator() (const string& next_word) {
+    current_words += next_word;
+    return Sayer(current_words);
+  }
+
+  string operator() () {
+    return current_words;
+  }*/
+
+};
+
+string say(const string& start_word="") {
+
 }
 
 int main() {
-  assert (say()("") == "");//I dont think it is possible to use say() == "", can only return a function
-  //assert (say("hi")() == "hi");
+  assert (say() == "");
+  assert (say("hi")() == "hi");
   //assert (say("hi")("there")() == "hi there");
   //assert (say("hello")("my")("name")("is")("Colette")() == "hello my name is Colette");
 

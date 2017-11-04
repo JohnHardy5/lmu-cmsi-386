@@ -1,19 +1,36 @@
 #include "queue.h"
+#include <assert.h>
+#include <iostream>
+using namespace std;
 
 void testEnqueue() {
-  Queue<T> testEmpty = new Queue()
-  assert(testEmpty.get_end_node() == nullptr);
-  assert(testEmpty.get_start_node() == nullptr);
+  Queue<string> testEmpty;
+  Node<string>* endNode = testEmpty.get_end_node();
+  Node<string>* startNode = testEmpty.get_start_node();
+  int size = testEmpty.get_size();
 
+  assert(endNode == nullptr);
+  assert(startNode == nullptr);
+  assert(size == 0);
+  std::cout << "Empty queue tests passed." << '\n';
+
+  testEmpty.enqueue("Why ");
+
+  endNode = testEmpty.get_end_node();
+  startNode = testEmpty.get_start_node();
+  size = testEmpty.get_size();
+  string startNodeValue = startNode->get_data();
+
+  /*
+  assert(endNode != nullptr);
+  assert(startNode != nullptr);
+  assert(size == 1);
+  assert(startNodeValue == "Why ");
+  std::cout << "Queue with one item tests passed." << '\n';*/
 }
 
 int main() {
-    int nine = 9;
-    int eight = 8;
-    int seven = 7;
-    int six = 6;
-    int five = 5;
+  testEnqueue();
 
-    cout << "Create queue holding 9 and 8 with a size of 2" << "\n";
-    Queue<T> test_queue = new Queue(&nine,&eight,2);
+  std::cout << "All tests passed!" << '\n';
 }

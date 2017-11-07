@@ -6,6 +6,7 @@ using namespace std;
 
 template<typename T>
 class Node {
+private:
 	T data;
 	Node* next;
 
@@ -14,12 +15,12 @@ public:
 
 	~Node() { delete next; }
 
-	void change_next(Node* n) {
-		next = n;
-	}
-
 	Node* get_next() {
 		return next;
+	}
+
+	void change_next(Node* n) {
+		next = n;
 	}
 
 	T get_data() {

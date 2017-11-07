@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <iostream>
 #include <vector>
+#include <array>
 using namespace std;
 
 void testString() {
@@ -193,10 +194,74 @@ void testVector() {
   }
 }
 
+void testArray() {
+  Queue<array<int, 1>> test;
+
+  assert(test.get_end_node() == nullptr);
+  assert(test.get_start_node() == nullptr);
+  assert(test.get_size() == 0);
+  std::cout << "Array enqueue with empty queue tests passed." << '\n';
+
+  test.enqueue({1});
+
+  assert(test.get_end_node() != nullptr);
+  assert(test.get_start_node() != nullptr);
+  assert(test.get_size() == 1);
+  assert(test.get_start_node()->get_data() == (array<int, 1>{1}));
+  assert(test.get_end_node()->get_data() == (array<int, 1>{1}));
+  std::cout << "Array enqueue with one item tests passed." << '\n';
+
+  test.enqueue({});
+  test.enqueue({3});
+  test.enqueue({4});
+  test.enqueue({5});
+
+  assert(test.get_end_node() != nullptr);
+  assert(test.get_start_node() != nullptr);
+  assert(test.get_size() == 5);
+  assert(test.get_start_node()->get_data() == (array<int, 1>{1}));
+  assert(test.get_end_node()->get_data() == (array<int, 1>{5}));
+  std::cout << "Array enqueue with multiple items tests passed." << '\n';
+
+  test.dequeue();
+
+  assert(test.get_end_node() != nullptr);
+  assert(test.get_start_node() != nullptr);
+  assert(test.get_size() == 4);
+  assert(test.get_start_node()->get_data() == (array<int, 1>{}));
+  assert(test.get_end_node()->get_data() == (array<int, 1>{5}));
+  std::cout << "Array dequeue with one less item tests passed." << '\n';
+
+  test.dequeue();
+  test.dequeue();
+  test.dequeue();
+
+  assert(test.get_end_node() != nullptr);
+  assert(test.get_start_node() != nullptr);
+  assert(test.get_size() == 1);
+  assert(test.get_start_node()->get_data() == (array<int, 1>{5}));
+  assert(test.get_end_node()->get_data() == (array<int, 1>{5}));
+  std::cout << "Array dequeue with one last item tests passed." << '\n';
+
+  test.dequeue();
+
+  assert(test.get_end_node() == nullptr);
+  assert(test.get_start_node() == nullptr);
+  assert(test.get_size() == 0);
+  std::cout << "Array dequeue with no items tests passed." << '\n';
+
+  try {
+    test.dequeue();
+  } catch (exception& e) {
+    std::cout << "Successfully throws an error when I dequeue from an empty array Queue." << '\n';
+  }
+}
+
 int main() {
   testString();
   testInt();
   testVector();
+  testArray();
 
   std::cout << "All tests passed!" << '\n';
 }

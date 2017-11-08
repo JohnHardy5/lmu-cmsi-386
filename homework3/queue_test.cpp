@@ -1,5 +1,10 @@
+/*
+   "It is better to feel good than to feel bad." --Dr. Ray Toal November 2017
+   Written by: John Hardy and Jordan Sanders
+*/
+
 #include "queue.h"
-#include <assert.h>
+#include <cassert>
 #include <iostream>
 using namespace std;
 
@@ -75,6 +80,16 @@ void testDequeue() {
   assert(test.get_start_node() == nullptr);
   assert(test.get_size() == 0);
   std::cout << "Dequeue with no items tests passed." << '\n';
+
+  try {
+    test.dequeue();
+    assert(false);
+  } catch (const underflow_error& ue) {
+    assert(true);
+  } catch (...) {
+    // Caught the wrong exception
+    assert(false);
+  }
 }
 
 int main() {

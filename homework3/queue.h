@@ -1,3 +1,8 @@
+/*
+   "It is better to feel good than to feel bad." --Dr. Ray Toal November 2017
+   Written by: John Hardy and Jordan Sanders
+*/
+
 #include <iostream>
 #include <cassert>
 
@@ -36,12 +41,13 @@ public:
 
 	explicit Queue(): startNode(nullptr), endNode(nullptr), size(0) {}
 
-    Queue(const Queue&) = delete;
+    Queue(const Queue& q) = delete;
 
-    Queue& operator=(const Queue&) = delete;
+    Queue& operator= (const Queue&) = delete;
 
 	~Queue() {
 		delete startNode;
+		delete endNode;
 	}
 
 	void enqueue(const T& value) {

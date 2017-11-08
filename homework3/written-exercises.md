@@ -1,3 +1,6 @@
+>   "It is better to feel good than to feel bad." --Dr. Ray Toal November 2017
+   Answered by: John Hardy and Jordan Sanders
+
 ### 1. (5 pts) Given the C++ declaration:
 ```c++
 struct {
@@ -34,7 +37,7 @@ public:
   std::string b;
 };
 
-class Derived: Base {
+class Derived: public Base {
 public:
   float c;
   int b;

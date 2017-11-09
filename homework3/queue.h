@@ -42,10 +42,32 @@ public:
 
 	explicit Queue(): startNode(nullptr), endNode(nullptr), size(0) {}
 
-    Queue(const Queue& q) = delete;
+	//Copy constructor
+  Queue(const Queue& q) = delete;
 
-    Queue& operator= (const Queue& q) = delete;
+	//Copy assignment operator
+  Queue& operator= (const Queue& q) = delete;
 
+	//Move constructor
+	Queue(Queue&& other): startNode(other.startNode), endNode(other.endNode), size(other.get_size()) {
+		other.startNode = nullptr;
+		other.endNode = nullptr;
+	}
+
+	//Move assignment operator
+	Queue& operator= (Queue&& other) {
+		if (&other == this) return *this;
+		delete startNode;
+		delete endNode;
+		startNode = other.startNode;
+		endNode = other.endNode;
+		size = other.get_size();
+		other.startNode = nullptr;
+		other.endNode = nullptr;
+		return *this;
+	}
+
+	//Destructor
 	~Queue() {
 		delete startNode;
 		delete endNode;

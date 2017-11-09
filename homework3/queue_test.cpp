@@ -10,6 +10,15 @@
 #include <array>
 using namespace std;
 
+void test_no_copies() {
+  Queue<int> p;
+  Queue<int> q;
+  // No way to test this at run time, but uncomment the following lines
+  // and look for compile time errors.
+  // p = q;
+  // Queue<int> r(p);
+}
+
 Queue<int>* one_two_three() {
   Queue<int>* q = new Queue<int>();
   for (int i = 1; i <= 3; i++) q->enqueue(i);

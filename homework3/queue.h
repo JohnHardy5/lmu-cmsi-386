@@ -69,6 +69,9 @@ public:
 
 	//Destructor
 	~Queue() {
+		while (size != 0) {
+			dequeue();
+		}
 		delete startNode;
 		delete endNode;
 	}

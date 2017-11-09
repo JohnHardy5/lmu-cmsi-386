@@ -284,6 +284,7 @@ void test_array() {
 }
 
 int main() {
+  test_no_copies();
   test_moves();
   test_string();
   test_int();

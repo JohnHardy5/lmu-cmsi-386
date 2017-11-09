@@ -1,3 +1,8 @@
+/*
+   "It is better to feel good than to feel bad." --Dr. Ray Toal November 2017
+   Written by: John Hardy and Jordan Sanders
+*/
+
 #include <iostream>
 #include <assert.h>
 #include <functional>

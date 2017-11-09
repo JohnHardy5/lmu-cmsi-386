@@ -1,3 +1,8 @@
+/*
+   "It is better to feel good than to feel bad." --Dr. Ray Toal November 2017
+   Written by: John Hardy and Jordan Sanders
+*/
+
 #include <iostream>
 #include <cassert>
 
@@ -37,12 +42,13 @@ public:
 
 	explicit Queue(): startNode(nullptr), endNode(nullptr), size(0) {}
 
-	Queue(const Queue&) = delete;
+    Queue(const Queue& q) = delete;
 
-	Queue& operator=(const Queue&) = delete;
+    Queue& operator= (const Queue& q) = delete;
 
 	~Queue() {
 		delete startNode;
+		delete endNode;
 	}
 
 	void enqueue(const T& value) {
@@ -56,12 +62,13 @@ public:
 		size++;
 	}
 
-	void dequeue() {
+	T dequeue() {
 		if (size < 1) {
 			throw std::underflow_error("You can't delete from an empty queue... Duh!😞");
 		}
 
 		Node<T>* nodeToDelete = startNode;
+		T dataToReturn = nodeToDelete->get_data();
 
 		startNode = startNode->get_next();
 		nodeToDelete->change_next(nullptr);
@@ -69,6 +76,8 @@ public:
 			endNode = nullptr;
 		}
 		size--;
+		delete nodeToDelete;
+		return dataToReturn;
 	}
 
 	Node<T>* get_start_node() {

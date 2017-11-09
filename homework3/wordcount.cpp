@@ -11,7 +11,7 @@ using namespace std;
 string remove_nonletters(const string& input) {
   string result = input;
   for (int i = 0; i < (signed int)result.length(); i++) {
-    std::cout << "Current character: " << input[i] << "   Current position: " << i << '\n';
+    //std::cout << "Current character: " << input[i] << "   Current position: " << i << '\n';
     result[i] = tolower(result[i]);
     if (!isalpha(result[i])) {
       if (i == 0 || (i > 0 && isspace(result[i - 1]))) {
@@ -25,17 +25,17 @@ string remove_nonletters(const string& input) {
   if (result.length() > 0 && !isspace(result[result.length() - 1])) {
     result.append(" ");
   }
-  std::cout << "Non-letters removed: " << result << '\n';
+  //std::cout << "Non-letters removed: " << result << '\n';
   return result;
 }
 
 vector<string> group_words_in_vector(const string& input) {
-  cout << "Input: " << input << '\n';
+  //cout << "Input: " << input << '\n';
   vector<string> result;
   int pivot = 0;
   for (unsigned int i = 0; i < input.length(); i++) {
     if (isspace(input[i]) || i == input.length() - 1) {
-      std::cout << "Replacing input: " << input.substr(pivot, i - pivot + 1) << '\n';
+      //std::cout << "Replacing input: " << input.substr(pivot, i - pivot + 1) << '\n';
       result.push_back(input.substr(pivot, i - pivot + 1));
       pivot = i + 1;
     }
@@ -62,7 +62,7 @@ vector<string> group_similar_words(const vector<string>& words, vector<int>& wor
       }
     }
     result[i] = result[i] + to_string(wordscount.front()) + "\n";
-    std::cout << "Grouping similar words: " << result[i];
+    //std::cout << "Grouping similar words: " << result[i];
   }
   return result;
 }
@@ -81,10 +81,10 @@ vector<string> sort_words_large_to_small(vector<string> &words, vector<int> &wor
         largestPosition = j;
       }
     }
-    std::cout << "Swapping words: " << words[i] << "and " << words[largestPosition];
+    //std::cout << "Swapping words: " << words[i] << "and " << words[largestPosition];
     string tempStr = words[i];
     words[i] = words[largestPosition];
-    std::cout << words[i];
+    //std::cout << words[i];
     words[largestPosition] = tempStr;
     int tempInt = wordscount[i];
     wordscount[i] = wordscount[largestPosition];
@@ -108,7 +108,7 @@ string wordcount(const string &input) {
   words = group_similar_words(words, wordscount);
   words = sort_words_large_to_small(words, wordscount);
   result = convert_vector_to_string(words);
-  std::cout << "Final string: " << result << "\n";
+  //std::cout << "Final string: " << result << "\n";
   return result;
 }
 

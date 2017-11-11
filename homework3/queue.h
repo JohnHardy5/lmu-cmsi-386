@@ -56,14 +56,14 @@ public:
 
 	//Move assignment operator
 	Queue& operator= (Queue&& other) {
-		if (&other == this) return *this;
-		delete startNode;
-		delete endNode;
-		startNode = other.startNode;
-		endNode = other.endNode;
-		size = other.get_size();
-		other.startNode = nullptr;
-		other.endNode = nullptr;
+		if (&other != this) {
+			size = other.size;
+			other.size = 0;
+			startNode = other.startNode;
+			endNode = other.endNode;
+			other.startNode = nullptr;
+			other.endNode = nullptr;
+		}
 		return *this;
 	}
 

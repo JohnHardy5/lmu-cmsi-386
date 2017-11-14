@@ -6,6 +6,7 @@
 #include <iostream>
 #include <assert.h>
 #include <vector>
+#include <string>
 using namespace std;
 
 string remove_nonletters(const string& input) {
@@ -53,18 +54,18 @@ vector<string> group_similar_words(const vector<string>& words, vector<int>& wor
   for (unsigned int i = 0; i < input.length(); i++) {
     if (isspace(input[i])) {
       currentWord = input.substr(currentWordPosition, i - currentWordPosition + 1);
-      std::cout << "Current word: " << currentWord << '\n';
+      //std::cout << "Current word: " << currentWord << '\n';
       counterPosition = i + 1;
       for (unsigned int j = i + 1; j < input.length(); j++) {
-        std::cout << "Current letter of j: " << input[j] << '\n';
-        std::cout << "Position of counter: " << counterPosition << " Position of j: " << j << '\n';
+        //std::cout << "Current letter of j: " << input[j] << '\n';
+        //std::cout << "Position of counter: " << counterPosition << " Position of j: " << j << '\n';
         if (isspace(input[j])) {
           if (input.substr(counterPosition, j - counterPosition + 1) == currentWord) {
-            std::cout << "Found a match: " << input.substr(counterPosition, j - counterPosition + 1) << "and " << currentWord << '\n';
+            //std::cout << "Found a match: " << input.substr(counterPosition, j - counterPosition + 1) << "and " << currentWord << '\n';
             numberOfWords++;
-            std::cout << "Before erasing: " << input << '\n';
+            //std::cout << "Before erasing: " << input << '\n';
             input.erase(counterPosition, j - counterPosition + 1);
-            std::cout << "After erasing: " << input << '\n';
+            //std::cout << "After erasing: " << input << '\n';
             j = counterPosition - 1;
           } else {
             counterPosition = j + 1;
@@ -72,7 +73,7 @@ vector<string> group_similar_words(const vector<string>& words, vector<int>& wor
         }
       }
       results += currentWord + to_string(numberOfWords);
-      std::cout << "New results: " << results;
+      //std::cout << "New results: " << results;
     }
   }
 
@@ -100,11 +101,39 @@ vector<string> group_similar_words(const vector<string>& words, vector<int>& wor
 }
 
 vector<string> sort_words_large_to_small(vector<string> &words, vector<int> &wordscount) {
-  string input = "test 3hello 4";
+  string input = "test 4hello 3try 1fall 1doom 2";
   string result;
-  int largest = 0;
-  string largestWord;
-  
+
+  while (input != "") {
+    int pivot = 0;
+    int largest = 0;
+    string largestWord;
+    int largestPosition = 0;
+    int largestSize = 0;
+
+    for (unsigned int i = 0; i < input.length(); i++) {
+      char currentLetter = input[i];
+      std::cout << "Current letter: " << currentLetter << '\n';
+
+      if (!isalpha(currentLetter) && !isspace(currentLetter)) {
+        std::cout << "Current letter is not an alpha and is not a space." << '\n';
+        if (stoi(to_string(currentLetter)) > largest) {
+          largest = stoi(to_string(currentLetter));
+          std::cout << "Current letter is an int larger than largest." << '\n';
+          largestWord = input.substr(pivot, i - pivot + 1);
+          largestPosition = pivot;
+          largestSize = i - pivot + 1;
+        }
+        std::cout << "Updating pivot." << '\n';
+        pivot = i + 1;
+      }
+    }
+    input.erase(largestPosition, largestSize);
+    std::cout << "New input: " << input << '\n';
+    result += largestWord;
+    std::cout << "New result: " << result << '\n';
+  }
+
   //std::cout << "First word: " << words[0];
   for (unsigned int i = 0; i < wordscount.size(); i++) {
     //std::cout << "Comparing word: " << words[i];
@@ -151,19 +180,20 @@ string wordcount(const string &input) {
 
 int main() {
   string general_test = "The tests, my lord,have failed! FAILED have   the   tests,   they   have.";
-  string test_caps = "   Hello Hello hello HeLlO hELlo   ";
-  string test_letter = "G";
-  string test_word = "GiT";
-  string test_nothing = "";
-  string test_space = " ";
-  string test_spaces = "   ";
-  string test_nonletters = ";:&^$#@!'. .'&*()(*&%%^^){}[{]|,|||}]";
-  string test_complex = "(((((((($$$sNEAky$$$))))))))";
-  string test_a_couple = "!!!THIS_IS_NOT_A_COUPLE!!!!-*lol_jk*";
-  string test_emojis = "😄🍰😞yay!emojis!🐷👩";
-  string test_weird = "в聲字вwtfЖ_ЛareЙ_字яtheseЮ_пфthings形?";
-  string test_numbers = "4This5is6a5numbers3test2test";
+  // string test_caps = "   Hello Hello hello HeLlO hELlo   ";
+  // string test_letter = "G";
+  // string test_word = "GiT";
+  // string test_nothing = "";
+  // string test_space = " ";
+  // string test_spaces = "   ";
+  // string test_nonletters = ";:&^$#@!'. .'&*()(*&%%^^){}[{]|,|||}]";
+  // string test_complex = "(((((((($$$sNEAky$$$))))))))";
+  // string test_a_couple = "!!!THIS_IS_NOT_A_COUPLE!!!!-*lol_jk*";
+  // string test_emojis = "😄🍰😞yay!emojis!🐷👩";
+  // string test_weird = "в聲字вwtfЖ_ЛareЙ_字яtheseЮ_пфthings形?";
+  // string test_numbers = "4This5is6a5numbers3test2test";
 
+  bool failed = false;
   try {
     assert(wordcount(general_test) == "have 3\nfailed 2\nthe 2\ntests 2\nlord 1\nthey 1\nmy 1\n");
     // assert(wordcount(test_caps) == "hello 5\n");
@@ -180,6 +210,11 @@ int main() {
     // assert(wordcount(test_numbers) == "test 2\nis 1\na 1\nnumbers 1\nthis 1\n");
   } catch (exception &e) {
     cout << e.what() << "\n";
+    failed = true;
   }
-  std::cout << "All tests passed!\n";
+  if (failed) {
+    std::cout << "There was an error!" << '\n';
+  } else {
+    std::cout << "All tests passed!\n";
+  }
 }

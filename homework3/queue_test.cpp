@@ -19,9 +19,9 @@ void test_no_copies() {
   // Queue<int> r(p);
 }
 
-Queue<int>* one_two_three() {
-  Queue<int>* q = new Queue<int>();
-  for (int i = 1; i <= 3; i++) q->enqueue(i);
+Queue<int> one_two_three() {
+  Queue<int> q;
+  for (int i = 1; i <= 3; i++) q.enqueue(i);
   return q;
 }
 
@@ -30,14 +30,14 @@ void test_moves() {
   Queue<int> p = Queue<int>();
 
   // Construction via a function return call is a move
-  Queue<int>* q = one_two_three();
-  assert(q->get_size() == 3);
-  assert(q->dequeue() == 1);
+  Queue<int> q = one_two_three();
+  assert(q.get_size() == 3);
+  assert(q.dequeue() == 1);
 
   // Test move assignment
   q = one_two_three();
-  assert(q->get_size() == 3);
-  assert(q->dequeue() == 1);
+  assert(q.get_size() == 3);
+  assert(q.dequeue() == 1);
 }
 
 void test_string() {

@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <cassert>
-#include <functional>
 using namespace std;
 
 struct Sayer {

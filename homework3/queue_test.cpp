@@ -6,9 +6,21 @@
 #include "queue.h"
 #include <cassert>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <array>
 using namespace std;
+
+void test_output_stream() {
+  Queue<string> s;
+  s.enqueue("Output");
+  s.enqueue("stream");
+  s.enqueue("test");
+  s.enqueue("passed!");
+  stringstream strs;
+  strs << s;
+  assert(strs.str() == "Output stream test passed!");
+}
 
 void test_no_copies() {
   Queue<int> p;
@@ -284,6 +296,7 @@ void test_array() {
 }
 
 int main() {
+  test_output_stream();
   test_no_copies();
   test_moves();
   test_string();

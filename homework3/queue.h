@@ -4,7 +4,6 @@
 */
 
 #include <iostream>
-#include <cassert>
 
 using namespace std;
 
@@ -39,6 +38,19 @@ public:
 	Node<T>* startNode;
 	Node<T>* endNode;
 	int size;
+
+	friend ostream& operator<< (ostream &os, Queue& q) {
+		Node<T>* current = q.get_start_node();
+		Node<T>* end = q.get_end_node();
+		while (current != nullptr) {
+			os << current->get_data();
+			if (current != end) {
+				os << " ";
+			}
+			current = current->get_next();
+		}
+	  return os;
+	}
 
 	explicit Queue(): startNode(nullptr), endNode(nullptr), size(0) {}
 

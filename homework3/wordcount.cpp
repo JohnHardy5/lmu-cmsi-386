@@ -4,7 +4,7 @@
 */
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 using namespace std;
 
 string remove_nonletters(const string& input) {

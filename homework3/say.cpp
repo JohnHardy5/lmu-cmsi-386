@@ -4,13 +4,13 @@
 */
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 #include <functional>
 using namespace std;
 
 struct Sayer {
 private:
-  string current_words;
+  string current_words = "";
 public:
   explicit Sayer (const string& word): current_words(word) {}
 

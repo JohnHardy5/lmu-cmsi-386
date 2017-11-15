@@ -4,7 +4,7 @@
 */
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 #include <vector>
 using namespace std;
 
@@ -104,7 +104,7 @@ vector<string> sort_words_large_to_small(vector<string> &words, vector<int> &wor
   string result;
   int largest = 0;
   string largestWord;
-  
+
   //std::cout << "First word: " << words[0];
   for (unsigned int i = 0; i < wordscount.size(); i++) {
     //std::cout << "Comparing word: " << words[i];

@@ -1,3 +1,7 @@
+{-
+Written by: John Hardy, Joey Martinez, and J Goocher
+-}
+
 module Warmup exposing (..)
 
 import List exposing (..)
@@ -25,7 +29,8 @@ powers base limit =
       List.map (\a -> base ^ a) (range 0 (floor (logBase (toFloat base) (toFloat limit))))
 
 sumOfCubesOfOdds: List Int -> Int
-sumOfCubesOfOdds input = 0
+sumOfCubesOfOdds input =
+  foldr (+) 0 <| List.map (\b -> b * b * b) <| filter (\a -> a % 2 /= 0) input
 
 daysBetween: String -> String  -> Result String (Int)
 daysBetween firstDate secondDate =

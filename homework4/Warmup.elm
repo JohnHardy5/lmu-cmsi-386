@@ -3,25 +3,30 @@ module Warmup exposing (..)
 import List exposing (..)
 import Basics exposing (..)
 
-change: Int -> (Int, Int, Int, Int)
+change: Int -> Result String (Int, Int, Int, Int)
 change amount =
-  let
-    a = amount
-    b = a % 25
-    c = b % 10
-    d = c % 5
-  in
-    (,,,) (a // 25) (b // 10) (c // 5) d
+  if amount < 0 then Err "amount cannot be negative" else
+    Ok <|
+      let
+        quarters = amount
+        dimes = quarters % 25
+        nickles = dimes % 10
+        pennies = nickles % 5
+      in
+        (,,,) (quarters // 25) (dimes // 10) (nickles // 5) pennies
 
-stripQuotes: String -> Int
-stripQuotes input = 0
+stripQuotes: String -> String
+stripQuotes input = ""
 
-powers: Int -> Int -> List Int
-powers x limit =
-  List.map (\a -> x ^ a) (range 0 (floor (logBase (toFloat x) (toFloat limit))))
+powers: Int -> Int -> Result String (List Int)
+powers base limit =
+  if base < 0 then Err "negative base" else
+    Ok <|
+      List.map (\a -> base ^ a) (range 0 (floor (logBase (toFloat base) (toFloat limit))))
 
 sumOfCubesOfOdds: List Int -> Int
 sumOfCubesOfOdds input = 0
 
-daysBetween: String -> String  -> Int
-daysBetween firstDate secondDate = 0
+daysBetween: String -> String  -> Result String (Int)
+daysBetween firstDate secondDate =
+  Ok <| 0

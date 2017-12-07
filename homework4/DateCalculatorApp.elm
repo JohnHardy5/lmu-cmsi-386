@@ -14,19 +14,19 @@ formatOutput toFormat =
 
 main : Program Never Dates Msg
 main =
-  Html.beginnerProgram { model = dates, view = view, update = updateDates }
+  Html.beginnerProgram { model = dates, view = view, update = update }
 
 dates : Dates
 dates = { firstDate = "", secondDate = "" }
 
-updateDates : Msg -> Dates -> Dates
-updateDates msg dates =
+update : Msg -> Dates -> Dates
+update msg dates =
   case msg of
     ChangeFirstDate f -> { dates | firstDate = f }
     ChangeSecondDate s -> { dates | secondDate = s }
 
 view : Dates -> Html Msg
-view model =
+view dates =
   body
     [style
       [ ("text-align", "center")
@@ -77,7 +77,7 @@ view model =
           [ ("font-size", "28px") ]
           , id "output"
         ]
-        [ text ( formatOutput (daysBetween dates.firstDate dates.secondDate)) ]
+        [ text ( formatOutput (daysBetween dates.firstDate dates.secondDate) ) ]
       , text "days."
       ]
     ]

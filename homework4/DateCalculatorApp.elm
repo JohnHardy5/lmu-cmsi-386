@@ -12,6 +12,10 @@ formatOutput toFormat =
     Err msg -> ""
     Ok output -> toString output
 
+main : Program Never Dates Msg
+main =
+  Html.beginnerProgram { model = dates, view = view, update = updateDates }
+
 dates : Dates
 dates = { firstDate = "", secondDate = "" }
 
@@ -21,8 +25,8 @@ updateDates msg dates =
     ChangeFirstDate f -> { dates | firstDate = f }
     ChangeSecondDate s -> { dates | secondDate = s }
 
-main : Html Msg
-main =
+view : Dates -> Html Msg
+view model =
   body
     [style
       [ ("text-align", "center")

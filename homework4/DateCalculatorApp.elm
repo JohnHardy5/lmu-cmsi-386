@@ -2,6 +2,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 -- import Warmup exposing (..)
 
+main : Html msg
 main =
   body [style
       [ ("text-align", "center")
@@ -18,7 +19,19 @@ main =
           ]
         ]
         [ text "Date Calculator" ]
-    , p [] [text "From", input [] []]
-    , p [] []
-    , p [] []
+    , p [] [text "From", input [style
+                    [ ("border", "2px solid grey")
+                    , ("margin-left", "8px")
+                    ]
+                    , id "from"
+                    , type_ "date"
+                    ] []]
+    , p [] [text "to", input [style
+                    [ ("border", "2px solid grey")
+                    , ("margin-left", "8px")
+                    ]
+                    , id "to"
+                    , type_ "date"
+                    ] []]
+    , p [] [text "is", span [] []]
     ]

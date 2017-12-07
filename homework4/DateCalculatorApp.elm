@@ -33,5 +33,5 @@ main =
                     , id "to"
                     , type_ "date"
                     ] []]
-    , p [] [text "is", span [] []]
+    , p [] [text "is", span [style [ ("font-size", "28px") ], id "output"] [], text "days." ]
     ]

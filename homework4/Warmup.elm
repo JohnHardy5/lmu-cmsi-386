@@ -6,6 +6,8 @@ module Warmup exposing (..)
 
 import List exposing (..)
 import Basics exposing (..)
+import Date exposing (..)
+import Date.Extra as Date exposing (..)
 
 change: Int -> Result String (Int, Int, Int, Int)
 change amount =
@@ -26,12 +28,18 @@ powers: Int -> Int -> Result String (List Int)
 powers base limit =
   if base < 0 then Err "negative base" else
     Ok <|
-      List.map (\a -> base ^ a) (range 0 (floor (logBase (toFloat base) (toFloat limit))))
+      List.map (\a -> base ^ a) (List.range 0 (Basics.floor (logBase (toFloat base) (toFloat limit))))
 
 sumOfCubesOfOdds: List Int -> Int
 sumOfCubesOfOdds input =
   foldr (+) 0 <| List.map (\b -> b * b * b) <| filter (\a -> a % 2 /= 0) input
 
 daysBetween: String -> String  -> Result String (Int)
-daysBetween firstDate secondDate =
-  Ok <| 0
+daysBetween firstString secondString =
+    case Date.fromString firstString of
+      Err msg -> Err "First input string is not a date."
+      Ok firstDate ->
+        case Date.fromString secondString of
+          Err msg -> Err "Second input string is not a date."
+          Ok secondDate ->
+            Ok <| Date.diff Day firstDate secondDate

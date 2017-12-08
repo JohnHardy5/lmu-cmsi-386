@@ -4,8 +4,6 @@ Written by: John Hardy, Joey Martinez, and J Goocher
 
 module Cylinder exposing (..)
 
-import Html exposing (..)
-
 type alias Cylinder =
     { radius : Float
     , height : Float

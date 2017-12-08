@@ -6,6 +6,7 @@ module Warmup exposing (..)
 
 import List exposing (..)
 import Basics exposing (..)
+import Regex exposing (..)
 import Date exposing (..)
 import Date.Extra as Date exposing (..)
 
@@ -22,7 +23,7 @@ change amount =
         (,,,) (quarters // 25) (dimes // 10) (nickles // 5) pennies
 
 stripQuotes: String -> String
-stripQuotes input = ""
+stripQuotes input = replace All (regex "['\"]") (\_ -> "") <| input
 
 powers: Int -> Int -> Result String (List Int)
 powers base limit =

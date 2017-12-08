@@ -38,7 +38,7 @@ suite =
             [ test "one day" <| \_ -> daysBetween "2017-01-01" "2016-12-31" |> equal (Ok -1)
             , test "in leap year" <| \_ -> daysBetween "2016-03-01" "2016-02-27" |> equal (Ok -3)
             , test "in leap year again" <| \_ -> daysBetween "2016-02-27" "2016-03-01" |> equal (Ok 3)
-            ]{-
+            ]
         , describe "cylinder type"
             [ test "new cylinder" <| \_ ->
                 Cylinder.new |> equal { radius = 1.0, height = 1.0 }
@@ -50,5 +50,5 @@ suite =
                 volume { radius = 2.0, height = 10.0 } |> within (Absolute 0.000001) (40*pi)
             , test "surfaceArea" <| \_ ->
                 surfaceArea { radius = 2.0, height = 10.0 } |> within (Absolute 0.000001) (48*pi)
-            ]-}
+            ]
         ]

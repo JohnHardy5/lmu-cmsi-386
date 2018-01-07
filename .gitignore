@@ -5,7 +5,9 @@ exercisesTest.cpp
 queue.h.gch
 test.cpp
 a.exe
-
+a.out
+.metadata
+fortest
 env
 .cache
 __pycache__
